@@ -15,7 +15,7 @@ class UserController {
 
     @Get("/{id}")
     @Transactional(readOnly = true)
-    def show(long id) {
+    def show(id) {
         User.get(id)
     }
 
@@ -32,7 +32,7 @@ class UserController {
 
     @Delete("/{id}")
     @Transactional
-    def delete(long id) {
+    def delete(id) {
         def user = User.get(id)
         if (user) {
             user.delete()
