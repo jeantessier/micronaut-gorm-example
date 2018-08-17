@@ -1,7 +1,16 @@
 micronaut:
     application:
         name: gorm-test
-                
+
 #Uncomment to set server port
 #    server:
 #        port: 8080
+
+---
+dataSource:
+    dbCreate: update
+    driverClassName: com.mysql.cj.jdbc.Driver
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    url: jdbc:mysql://localhost/gormtest?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST8PDT
+    username: root
+    password: ""
