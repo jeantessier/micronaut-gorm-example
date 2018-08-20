@@ -30,6 +30,33 @@ class UserController {
         }
     }
 
+    @Patch("/{id}")
+    @Transactional
+    def update(id, String emailAddress, String password, String fullname) {
+        def user = User.get(id)
+        if (emailAddress) {
+            user.emailAddress = emailAddress
+        }
+        if (password) {
+            user.password = password
+        }
+        if (fullname) {
+            user.fullname = fullname
+        }
+        if (user.save()) {
+            return user
+        } else {
+            return user.errors.allErrors.collect { MessageFormat.format(it.defaultMessage, it.arguments) }.join(", ")
+        }
+    }
+
+    @Delete("/")
+    @Transactional
+    def delete() {
+        def numberDeleted = User.executeUpdate("delete User")
+        return "Deleted ${numberDeleted} records."
+    }
+
     @Delete("/{id}")
     @Transactional
     def delete(id) {
