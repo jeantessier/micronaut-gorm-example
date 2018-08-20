@@ -11,6 +11,6 @@ dataSource:
     dbCreate: update
     driverClassName: org.h2.Driver
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    url: jdbc:h2:mem:gormTest
+    url: jdbc:h2:./gormTest
     username: root
     password: ""
