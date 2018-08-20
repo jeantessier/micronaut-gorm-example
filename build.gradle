@@ -45,7 +45,7 @@ dependencies {
     // Use Tomcat connection pool
     runtime "org.apache.tomcat:tomcat-jdbc:8.0.44"
     // Use MySQL database driver
-    runtime "mysql:mysql-connector-java:6.0.4"
+    runtime "com.h2database:h2:1.4.196"
 
 }
 
