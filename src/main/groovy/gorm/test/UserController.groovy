@@ -32,16 +32,16 @@ class UserController {
 
     @Patch("/{id}")
     @Transactional
-    def update(id, String emailAddress, String password, String fullname) {
+    def update(id, Optional<String> emailAddress, Optional<String> password, Optional<String> fullname) {
         def user = User.get(id)
-        if (emailAddress) {
-            user.emailAddress = emailAddress
+        if (emailAddress.present) {
+            user.emailAddress = emailAddress.get()
         }
-        if (password) {
-            user.password = password
+        if (password.present) {
+            user.password = password.get()
         }
-        if (fullname) {
-            user.fullname = fullname
+        if (fullname.present) {
+            user.fullname = fullname.get()
         }
         if (user.save()) {
             return user
