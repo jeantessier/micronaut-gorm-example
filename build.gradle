@@ -1,22 +1,14 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
-    }
+plugins {
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "com.github.johnrengelman.shadow" version "4.0.2"
+    id "application"
+    id "groovy"
 }
+
+
 
 version "0.1"
 group "gorm.test"
-
-apply plugin:"io.spring.dependency-management"
-apply plugin:"com.github.johnrengelman.shadow"
-apply plugin:"application"
-apply plugin:"groovy"
-
 
 repositories {
     mavenLocal()
@@ -26,22 +18,29 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:bom:1.0.0.M4'
+        mavenBom 'io.micronaut:micronaut-bom:1.1.0.M1'
     }
 }
 
+configurations {
+        // for dependencies that are needed for development only
+        developmentOnly
+}
+
 dependencies {
-    compile "io.micronaut:runtime-groovy"
-    compile "io.micronaut:http-client"
-    compile "io.micronaut:http-server-netty"
-    compileOnly "io.micronaut:inject-groovy"
+    compile "io.micronaut:micronaut-runtime-groovy"
+    compile "io.micronaut:micronaut-validation"
+    compile "io.micronaut:micronaut-http-client"
+    compile "io.micronaut:micronaut-http-server-netty"
+    compileOnly "io.micronaut:micronaut-inject-groovy"
     runtime "ch.qos.logback:logback-classic:1.2.3"
-    testCompile "io.micronaut:inject-groovy"
-    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
+    testCompile("org.spockframework:spock-core") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }
+    testCompile "io.micronaut:micronaut-inject-groovy"
+    testCompile "io.micronaut.test:micronaut-test-spock:1.0.1"
 
-    compile "io.micronaut.configuration:hibernate-gorm"
+    compile "io.micronaut.configuration:micronaut-hibernate-gorm"
     // Use Tomcat connection pool
     runtime "org.apache.tomcat:tomcat-jdbc:8.0.44"
     // Use MySQL database driver
@@ -53,6 +52,11 @@ shadowJar {
     mergeServiceFiles()
 }
 
+run.classpath += configurations.developmentOnly
+test.classpath += configurations.developmentOnly
 run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
 
 mainClassName = "gorm.test.Application"
+tasks.withType(GroovyCompile) {
+    groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
+}
