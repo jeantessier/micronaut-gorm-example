@@ -1,4 +1,3 @@
-FROM openjdk:8-jdk-alpine
-RUN apk --no-cache add curl
+FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim
 COPY build/libs/*.jar gorm-test.jar
-CMD java ${JAVA_OPTS} -jar gorm-test.jar
+CMD java  -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -noverify ${JAVA_OPTS} -jar gorm-test.jar

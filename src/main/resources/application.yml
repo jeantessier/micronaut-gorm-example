@@ -1,8 +1,6 @@
 micronaut:
     application:
         name: gorm-test
-jackson:
-    module-scan: false
 
 ---
 dataSource:

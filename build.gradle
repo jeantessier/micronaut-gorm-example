@@ -18,7 +18,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.1.0.M2'
+        mavenBom 'io.micronaut:micronaut-bom:1.1.0.RC1'
     }
 }
 
@@ -30,6 +30,8 @@ configurations {
 dependencies {
     compile "io.micronaut:micronaut-runtime-groovy"
     compile "io.micronaut:micronaut-validation"
+    compile "io.micronaut.configuration:micronaut-hibernate-validator"
+    compile "io.micronaut.configuration:micronaut-hibernate-gorm"
     compile "io.micronaut:micronaut-http-client"
     compile "io.micronaut:micronaut-http-server-netty"
     compileOnly "io.micronaut:micronaut-inject-groovy"
@@ -40,12 +42,10 @@ dependencies {
     testCompile "io.micronaut:micronaut-inject-groovy"
     testCompile "io.micronaut.test:micronaut-test-spock:1.0.1"
 
-    compile "io.micronaut.configuration:micronaut-hibernate-gorm"
     // Use Tomcat connection pool
     runtime "org.apache.tomcat:tomcat-jdbc:8.0.44"
     // Use MySQL database driver
     runtime "mysql:mysql-connector-java:6.0.4"
-
 }
 
 shadowJar {
