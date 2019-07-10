@@ -28,10 +28,14 @@ dependencies {
     compileOnly "io.micronaut:micronaut-inject-groovy"
     implementation "io.micronaut:micronaut-runtime-groovy"
     implementation "io.micronaut:micronaut-validation"
-    implementation "io.micronaut:micronaut-http-server-netty"
     implementation "io.micronaut:micronaut-http-client"
-    runtime "ch.qos.logback:logback-classic:1.2.3"
-    testCompile("org.spockframework:spock-core") {
+    implementation "io.micronaut.configuration:micronaut-hibernate-validator"
+    implementation "io.micronaut.configuration:micronaut-hibernate-gorm"
+    implementation "io.micronaut:micronaut-http-server-netty"
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    runtimeOnly "com.h2database:h2"
+    runtimeOnly "org.apache.tomcat:tomcat-jdbc"
+    testImplementation("org.spockframework:spock-core") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }
     testImplementation "io.micronaut:micronaut-inject-groovy"
@@ -40,9 +44,9 @@ dependencies {
     testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.5.0"
 
     // Use Tomcat connection pool
-    implementation "org.apache.tomcat:tomcat-jdbc:8.0.44"
+    runtimeOnly 'io.micronaut.configuration:micronaut-jdbc-tomcat'
     // Use MySQL database driver
-    implementation "mysql:mysql-connector-java:6.0.4"
+    runtimeOnly "mysql:mysql-connector-java:6.0.4"
 }
 
 test.classpath += configurations.developmentOnly
