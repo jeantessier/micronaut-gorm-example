@@ -20,12 +20,9 @@ configurations {
 }
 
 dependencies {
-    implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-    compileOnly enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-    annotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-    testAnnotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-
+    compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
     compileOnly "io.micronaut:micronaut-inject-groovy"
+    implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     implementation "io.micronaut:micronaut-runtime-groovy"
     implementation "io.micronaut:micronaut-validation"
     implementation "io.micronaut:micronaut-http-client"
@@ -35,6 +32,7 @@ dependencies {
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
     runtimeOnly "com.h2database:h2"
     runtimeOnly "org.apache.tomcat:tomcat-jdbc"
+    testCompileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
     testImplementation("org.spockframework:spock-core") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }
