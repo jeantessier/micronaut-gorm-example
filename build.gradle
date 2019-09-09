@@ -33,6 +33,7 @@ dependencies {
     runtimeOnly "com.h2database:h2"
     runtimeOnly "org.apache.tomcat:tomcat-jdbc"
     testCompileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     testImplementation("org.spockframework:spock-core") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }
