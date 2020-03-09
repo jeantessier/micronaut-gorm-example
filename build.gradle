@@ -40,7 +40,6 @@ dependencies {
     testImplementation "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "io.micronaut.test:micronaut-test-junit5"
-    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.5.0"
 
     // Use Tomcat connection pool
     runtimeOnly 'io.micronaut.configuration:micronaut-jdbc-tomcat'
@@ -59,5 +58,7 @@ shadowJar {
     mergeServiceFiles()
 }
 
-run.classpath += configurations.developmentOnly
-run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+tasks.withType(JavaExec) {
+    classpath += configurations.developmentOnly
+    jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+}
