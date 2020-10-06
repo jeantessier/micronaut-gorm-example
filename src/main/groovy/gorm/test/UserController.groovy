@@ -1,7 +1,7 @@
 package gorm.test
 
+import grails.gorm.transactions.Transactional
 import io.micronaut.http.annotation.*
-import io.micronaut.spring.tx.annotation.*
 import java.text.*
 
 @Controller("/users")
