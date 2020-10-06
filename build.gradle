@@ -1,7 +1,7 @@
 plugins {
     id "groovy"
     id "com.github.johnrengelman.shadow" version "6.0.0"
-    id "application"
+    id "io.micronaut.application" version '1.0.3'
 }
 
 version "0.1"
@@ -12,32 +12,20 @@ repositories {
     jcenter()
 }
 
-configurations {
-    // for dependencies that are needed for development only
-    developmentOnly
+micronaut {
+    runtime "netty"
+    testRuntime "spock2"
+    processing {
+        incremental true
+        annotations "gorm.test.*"
+    }
 }
 
 dependencies {
-    compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    compileOnly("io.micronaut:micronaut-inject-groovy")
-    implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    implementation("io.micronaut:micronaut-inject")
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut.groovy:micronaut-runtime-groovy")
-    implementation("io.micronaut:micronaut-http-server-netty")
     implementation("io.micronaut:micronaut-http-client")
-    implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
-    implementation("io.micronaut.groovy:micronaut-hibernate-gorm")
-    developmentOnly("io.micronaut:micronaut-runtime-osx:$micronautVersion")
     runtimeOnly("ch.qos.logback:logback-classic")
-    runtimeOnly("com.h2database:h2")
-    runtimeOnly("org.apache.tomcat:tomcat-jdbc")
-    testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
-    testImplementation("io.micronaut:micronaut-inject-groovy")
-    testImplementation("org.spockframework:spock-core") {
-        exclude group: "org.codehaus.groovy", module: "groovy-all"
-    }
-    testImplementation("io.micronaut.test:micronaut-test-spock")
 
     // Use Tomcat connection pool
     runtime 'org.apache.tomcat:tomcat-jdbc'
@@ -45,36 +33,8 @@ dependencies {
     runtimeOnly "mysql:mysql-connector-java:6.0.4"
 }
 
-test.classpath += configurations.developmentOnly
-
 mainClassName = "gorm.test.Application"
-
-// use JUnit 5 platform
-test {
-    useJUnitPlatform()
-}
-
 java {
     sourceCompatibility = JavaVersion.toVersion('1.8')
     targetCompatibility = JavaVersion.toVersion('1.8')
-}
-
-tasks.withType(GroovyCompile) {
-    groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
-}
-
-shadowJar {
-    mergeServiceFiles()
-}
-
-tasks.withType(JavaExec) {
-    classpath += configurations.developmentOnly
-    jvmArgs('-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
-    if (gradle.startParameter.continuous) {
-        systemProperties(
-            'micronaut.io.watch.restart':'true',
-            'micronaut.io.watch.enabled':'true',
-            "micronaut.io.watch.paths":"src/main"
-        )
-    }
 }
