@@ -1,5 +1,8 @@
+.idea
 .gradle
 build
+out
+*.iml
 .factorypath
 
 .factorypath
