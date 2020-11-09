@@ -53,7 +53,7 @@ class UserController {
     @Delete("/")
     @Transactional
     def delete() {
-        def numberDeleted = User.executeUpdate("delete User")
+        def numberDeleted = User.executeUpdate("DELETE FROM user")
         return "Deleted ${numberDeleted} records."
     }
 
