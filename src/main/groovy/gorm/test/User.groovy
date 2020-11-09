@@ -11,6 +11,9 @@ class User {
     String password
     String fullname
 
+    Date dateCreated
+    Date lastUpdated
+
     static constraints = {
         id maxSize: 36, nullable: true // Gets assigned automatically by the mapping generator
         emailAddress email: true
