@@ -9,6 +9,7 @@ group "gorm.test"
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 micronaut {
